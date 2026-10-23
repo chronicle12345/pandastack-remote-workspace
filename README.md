@@ -2,7 +2,7 @@
 
 `deploy.ps1` 在 PandaStack 上创建或更新远程桌面浏览器，写入运行所需的 secret，触发部署，并检查登录、会话、终端、浏览器和窗口按钮。
 
-远程桌面终端、Chromium 和 SSH 使用 root 账户。系统不创建 dev 用户，也不配置 sudo。
+远程桌面终端、Chromium 和 SSH 使用 root 账户。
 
 ## 免责声明
 
@@ -16,7 +16,7 @@
 - PandaStack 账号和 API Key。
 - 免费套餐有 CPU、内存和运行时长限制，App 闲置后会休眠。
 
-Linux 和 macOS 可以使用标准 SSH 客户端手动配置 `ProxyCommand`，本目录没有提供对应脚本。
+Linux 和 macOS 可用标准 SSH 客户端配置 `ProxyCommand`。
 
 ### SSH 密钥
 
@@ -26,7 +26,7 @@ SSH 使用 root 公钥登录。默认路径是部署包目录下的 `.\pandastac
 SSH_PUBLIC_KEY_PATH=.\pandastack-root.pub
 ```
 
-相对路径以部署包目录为基准，不受 PowerShell 当前工作目录影响。私钥是同目录下的 `pandastack-root`，`.gitignore` 已排除这两个文件。填写 `off` 可以禁用 SSH。
+相对路径以部署包目录为基准。私钥是同目录下的 `pandastack-root`，`.gitignore` 已排除这两个文件。填写 `off` 可以禁用 SSH。
 
 更换密钥时，删除 `pandastack-root` 和 `pandastack-root.pub`，再运行 `deploy.ps1` 生成新密钥并写入远端 `/root/.ssh/authorized_keys`。
 
@@ -102,7 +102,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\connect-ssh.ps1 -Proxy htt
 
 网页会话有效期由 `SESSION_TTL_MINUTES` 控制，默认 180 分钟，范围 1 到 10080 分钟。会话过期后重新运行连接脚本。
 
-每次部署会生成新的 SSH 主机密钥，连接脚本关闭了 known_hosts 校验。需要严格校验时，先固定远端主机密钥，再修改连接脚本。
+每次部署会生成新的 SSH 主机密钥。连接脚本暂不校验 known_hosts。
 
 ## 部署结果
 
@@ -131,6 +131,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\deploy.ps1 -VerifyOnly
 - `src/`：部署到 PandaStack 的源码
 - `docs/DEPLOYMENT.md`：部署过程记录
 - `THIRD_PARTY_NOTICES.md`：第三方文件来源、版本、许可证和 SHA-256
+- `LICENSE`：MIT 许可证
 
 ## 安全
 
@@ -138,7 +139,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\deploy.ps1 -VerifyOnly
 - PandaStack API Key 通过请求头发送。
 - 网页密码、root 密码、数据库连接串和工作区密钥以 secret 形式写入 PandaStack。
 - SSH 部署读取公钥，私钥留在本地。
-- 工作区快照是可选功能，同时配置数据库连接串和工作区密钥后启用。未配置的可选 secret 会从 PandaStack 删除。快照排除 `.env`、SSH 密钥、证书和常见凭据文件。
+- 工作区快照是可选功能，同时配置数据库连接串和工作区密钥后启用。快照排除 `.env`、SSH 密钥、证书和常见凭据文件。
 
 ## 验证
 
@@ -147,3 +148,11 @@ python -m unittest discover -s tests -v
 ```
 
 如果安装了 Node.js，可以额外运行 `node --check src\desktop.js`。
+
+## 友情链接
+
+- [LINUX DO](https://linux.do/)
+
+## 许可证
+
+本项目采用 [MIT License](./LICENSE)。
