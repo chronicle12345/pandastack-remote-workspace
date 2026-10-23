@@ -1,0 +1,67 @@
+# Local secrets and credentials
+.env
+.env.*
+!.env.example
+.secrets/
+*.key
+*.pem
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.pub
+*.ppk
+*.crt
+*.cer
+*.der
+*.csr
+*.ovpn
+*.kdbx
+*.kdbx.*
+*.token
+*.secret
+credentials*.json
+secrets*.json
+id_ed25519*
+id_ecdsa*
+pandastack-root
+id_rsa*
+id_dsa*
+known_hosts
+known_hosts.old
+.ssh/
+.ssh-session*
+workspace-recovery-key.txt
+
+# Generated deployment data
+deployment-report*.json
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Editor and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# The pinned websocket-client wheel is intentionally tracked.
